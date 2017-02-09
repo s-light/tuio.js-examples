@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>tuio.js-example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- <script src="bower_components/osc.js/dist/osc-browser.js"></script>
+    <script src="bower_components/eventEmitter/EventEmitter.js"></script> -->
+    <!-- <script src="bower_components/tuio.js/src/tuio.js"></script> -->
+    <script src="/github/tuio.js/bower_components/osc.js/dist/osc-browser.js"></script>
+    <script src="/github/tuio.js/bower_components/eventEmitter/EventEmitter.js"></script>
+    <script src="/github/tuio.js/src/tuio.js"></script>
+    <script type="application/javascript">
+        console.log("tuio.js-example init...");
+
+        var tuioInput = new TUIOReceiver({ url:"ws://localhost:3334" });
+
+        // listen for oscPort open and close events
+        tuioInput.oscPort.on("open", function (msg) {
+            console.log("osc open", msg);
+        });
+        tuioInput.oscPort.on("close", function (msg) {
+            console.log("osc close", msg);
+        });
+
+        // register to some of the default profile events:
+        // catch all tuio 2D Add events (cur, obj, blb)
+        tuioInput.addListener(/tuio2D\D{3}Add/, function (msg) {
+            console.log("Add", msg);
+        });
+        tuioInput.addListener(/tuio2D\D{3}Set/, function (msg) {
+            console.log("Set", msg);
+        });
+        tuioInput.addListener(/tuio2D\D{3}Del/, function (msg) {
+            console.log("Del", msg);
+        });
+
+        // simplly listen for single events:
+        // tuioInput.addListener('tuio2DobjAdd', function (msg) {
+        //     console.log("obj Add", msg);
+        // });
+        // tuioInput.addListener('tuio2DobjSet', function (msg) {
+        //     console.log("obj Set", msg);
+        // });
+        // tuioInput.addListener('tuio2DobjDel', function (msg) {
+        //     console.log("obj Del", msg);
+        // });
+
+    </script>
+</head>
+<body>
+    <div class="info">
+        <p>
+            Simple test for TUIO in webbrowser. Open your Debugging Console to see the events. (in Firefox Shortcut: F12)
+        </p>
+    </div>
+</body>
+</html>

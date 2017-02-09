@@ -1,0 +1,25 @@
+{
+  "name": "tuio.js-examples",
+  "homepage": "https://github.com/s-light/tuio.js-examples",
+  "authors": [
+    "s-light <github@s-light.eu>"
+  ],
+  "description": "examples for tuio.js",
+  "main": "",
+  "keywords": [
+    "TUIO",
+    "OSC",
+    "examples"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper": "^0.10.2"
+  }
+}

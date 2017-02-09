@@ -3,14 +3,18 @@
 <head>
     <title>tuio.js-example</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- <script src="bower_components/osc.js/dist/osc-browser.js"></script>
-    <script src="bower_components/eventEmitter/EventEmitter.js"></script> -->
-    <!-- <script src="bower_components/tuio.js/src/tuio.js"></script> -->
+
+    <!-- <script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+    <script src="../bower_components/osc.js/dist/osc-browser.js"></script>
+    <script src="../bower_components/tuio.js/src/tuio.js"></script> -->
+
+    <!-- THIS FOLLOWING IS THE DEVELOPMENT LINKING!!! -->
     <script src="/github/tuio.js/bower_components/osc.js/dist/osc-browser.js"></script>
     <script src="/github/tuio.js/bower_components/eventEmitter/EventEmitter.js"></script>
     <script src="/github/tuio.js/src/tuio.js"></script>
+
     <script type="application/javascript">
-        console.log("tuio.js-example init...");
+        console.log("starting simple example...");
 
         var tuioInput = new TUIOReceiver({ url:"ws://localhost:3334" });
 
@@ -22,7 +26,7 @@
             console.log("osc close", msg);
         });
 
-        // register to some of the default profile events:
+        // register to some of the default tuio 1.1 profile events:
         // catch all tuio 2D Add events (cur, obj, blb)
         tuioInput.addListener(/tuio2D\D{3}Add/, function (msg) {
             console.log("Add", msg);

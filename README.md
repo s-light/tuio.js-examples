@@ -1,9 +1,13 @@
 # tuio.js-examples
 examples for tuio.js
 
-clone or download this repository.
+get this repository with [bower](https://bower.io/):  
+`myexamples$ bower install tuio.js-examples`
 
-install dependencies with [bower](https://bower.io/):
+or
+
+clone or download this repository.  
+then install dependencies with [bower](https://bower.io/):  
 `tuio.js-examples$ bower install`
 
 all the examples require a WebSocket TUIO Server that is reachable on ws://localhost:3334.  

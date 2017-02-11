@@ -15,6 +15,8 @@ window.onload = function() {
 	var canvas = document.getElementById('myCanvas');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+    // needed!! - this way item.rotation works as intended :-)
+    paper.settings.applyMatrix = false;
 
     var path = new paper.Path.Line({
         from: [0,0],
@@ -29,7 +31,7 @@ window.onload = function() {
 
     paper.view.onFrame = function(event) {
 		// On each frame, rotate the path by 3 degrees:
-		path.rotate(3);
+		path.rotate(1);
 	};
 
     // ******************************************
@@ -78,12 +80,21 @@ window.onload = function() {
     //
 
     function tuio2paperjsPosition(x, y) {
-        let bounds = paper.view.bounds;
-        let resultPoint = new paper.Point(
+        const bounds = paper.view.bounds;
+        const resultPoint = new paper.Point(
             bounds.width * x,
             bounds.height * y
         );
         return resultPoint;
+    }
+
+    function tuio2paperjsSize(w, h) {
+        const bounds = paper.view.bounds;
+        const resultSize = new paper.Size(
+            bounds.width * w,
+            bounds.height * h
+        );
+        return resultSize;
     }
 
     function tuio2paperjsRotation(a) {
@@ -134,9 +145,10 @@ window.onload = function() {
                     radius: smallEdge/5,
                     strokeColor: '#0000ff'
                 });
-                // move so that the center is at [0, 0]
                 shape.name = "shape";
+                // move so that the center is at [0, 0]
                 shape.position = new paper.Point();
+                // set rotation
                 shape.rotation = tuio2paperjsRotation(event.values.a);
                 groupElements.push(shape);
                 const labelClassID = new paper.PointText({
@@ -147,7 +159,7 @@ window.onload = function() {
                 labelClassID.name = "classID";
                 // move down
                 labelClassID.bounds.center.y = (
-                    labelClassID.bounds.center.y - labelSessionID.bounds.height
+                    labelClassID.bounds.center.y + labelSessionID.bounds.height
                 );
                 groupElements.push(labelClassID);
             } break;
@@ -161,12 +173,22 @@ window.onload = function() {
                 groupElements.push(shape);
             } break;
             case 'blb': {
-                const shape = new Path.Ellipse({
+                // console.log("create blb");
+                // const size = tuio2paperjsSize(event.values.w, event.values.h);
+                // console.log("size", size);
+                const shape = new paper.Path.Ellipse({
                     point: [0, 0],
-                    size: [180, 60],
-                    fillColor: '#00ffff'
+                    // size: size,
+                    size: [100, 100],
+                    strokeColor: '#00ffff'
                 });
                 shape.name = "shape";
+                // move so that the center is at [0, 0]
+                shape.position = new paper.Point();
+                // set rotation
+                shape.rotation = tuio2paperjsRotation(event.values.a);
+                // set size - this way we use the same 'function' everytime..
+                shape.bounds.size = tuio2paperjsSize(event.values.w, event.values.h);
                 groupElements.push(shape);
             } break;
             default:
@@ -220,16 +242,30 @@ window.onload = function() {
                         const delta = posNew.subtract(currentObj.position);
                         // console.log("delta", delta);
                         currentObj.translate(delta);
-                        // if (event.values.a) {
-                        //     const shape = currentObj.children['shape'];
-                        //     // const shape = currentObj.children.shape;
-                        //     console.log("shape.rotation", shape.rotation);
-                        //     const newAngle = tuio2paperjsRotation(event.values.a);
-                        //     console.log("newAngle", newAngle);
-                        //     shape.rotation = newAngle;
-                        //     // shape.rotation = tuio2paperjsRotation(event.values.a);
-                        //     // console.log("tuio2paperjsRotation(event.values.a)", tuio2paperjsRotation(event.values.a));
-                        // }
+                        // check if event contains angle/rotation information
+                        if (event.values.a) {
+                            // console.log("currentObj.rotation", currentObj.rotation);
+                            // const shape = currentObj.children['shape'];
+                            const shape = currentObj.children.shape;
+                            // console.log("shape.rotation", shape.rotation);
+                            // const newAngle = tuio2paperjsRotation(event.values.a);
+                            // console.log("newAngle", newAngle);
+                            // shape.rotation = newAngle;
+                            shape.rotation = tuio2paperjsRotation(event.values.a);
+                            // console.log("tuio2paperjsRotation(event.values.a)", tuio2paperjsRotation(event.values.a));
+                        }
+                        // check if event contains width & height information
+                        if (event.values.w && event.values.h) {
+                            // console.log("currentObj.rotation", currentObj.rotation);
+                            // const shape = currentObj.children['shape'];
+                            const shape = currentObj.children.shape;
+                            // const size = tuio2paperjsSize(event.values.w, event.values.h);
+                            // console.log("size", size);
+                            // console.log("shape.bounds.size", shape.bounds.size);
+                            // console.log("shape.rotation", shape.rotation);
+                            shape.bounds.size = tuio2paperjsSize(event.values.w, event.values.h);
+                            // shape.?? = tuio2paperjsPosition(event.values.w, event.values.h);
+                        }
                     } break;
                     case 'Del': {
                         currentObj.remove();

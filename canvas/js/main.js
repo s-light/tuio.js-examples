@@ -50,6 +50,7 @@ window.onload = function() {
         console.log("osc close");
     });
 
+    tuioInput.open();
 
     // ******************************************
     // show positions of all default tuio profile events:
@@ -166,7 +167,7 @@ window.onload = function() {
             case 'cur': {
                 const shape = new paper.Path.Circle({
                     center: [0, 0],
-                    radius: smallEdge/2,
+                    radius: smallEdge/5,
                     strokeColor: '#00ff00'
                 });
                 shape.name = "shape";

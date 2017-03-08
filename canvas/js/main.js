@@ -38,16 +38,42 @@ window.onload = function() {
     // setup tuio.js
 
     console.log("init tuio.js");
+    const tuioSource = "ws://" + document.location.hostname + ":3334";
+    console.log("setup for tuioSource", tuioSource);
+    var tuioInput = new TUIOReceiver({ url: tuioSource });
 
-    var tuioInput = new TUIOReceiver({ url:"ws://localhost:3334" });
+
+    function hideProjectInfo() {
+        // hide project info
+        // const projectinfo = document.getElementById('projectinfo');
+        // projectinfo.style.display = 'none';
+
+        const status_el = document.getElementById('status');
+        if (!status_el.innerText.startsWith("connect")) {
+            status_el.innerText = "waiting for connection...";
+        }
+    }
+
+    function updateConnectionInfo(connected) {
+        // hide project info
+        const status_el = document.getElementById('status');
+        status_el.style.display = 'block';
+        if (connected) {
+            status_el.innerText = "connected.";
+        } else {
+            status_el.innerText = "connection closed!";
+        }
+    }
 
     tuioInput.oscPort.on("open", function (msg) {
         // console.log("osc open", msg);
         console.log("osc open");
+        updateConnectionInfo(true);
     });
     tuioInput.oscPort.on("close", function (msg) {
         // console.log("osc close", msg);
         console.log("osc close");
+        updateConnectionInfo(false);
     });
 
     tuioInput.open();
@@ -118,7 +144,7 @@ window.onload = function() {
         const smallEdge = Math.min(
             paper.view.bounds.height,
             paper.view.bounds.width
-        ) / 4;
+        ) / 8;
 
         const groupElements = [];
 
@@ -144,7 +170,8 @@ window.onload = function() {
                     point: [0, 0],
                     size: [smallEdge, smallEdge],
                     radius: smallEdge/5,
-                    strokeColor: '#0000ff'
+                    strokeColor: '#00a0ff',
+                    strokeWidth: 2
                 });
                 shape.name = "shape";
                 // move so that the center is at [0, 0]

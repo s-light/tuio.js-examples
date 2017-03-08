@@ -2,11 +2,18 @@
 <html>
 <head>
     <title>canvas</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <link rel="stylesheet" href="css/main.css">
 
-    <script src="../bower_components/paper/dist/paper-full.js"></script>
+    <script src="bower_components/stats.js/build/stats.js"></script>
+    <script src="js/showfps.js"></script>
+
+    <script src="bower_components/paper/dist/paper-full.js"></script>
 
     <script src="../bower_components/eventEmitter/EventEmitter.js"></script>
     <script src="../bower_components/long/dist/long.js"></script>
@@ -19,9 +26,20 @@
 <body>
     <div class="info">
         <p>
-            Simple test for TUIO in webbrowser. Draws a Rectangle for every received object.
+
         </p>
     </div>
+    <div class="info">
+        <div id="projectinfo">
+            Simple test for TUIO in webbrowser. Draws a Rectangle for every received object.
+        </div>
+        <div id="status">
+            LOADING.....
+        </div>
+    </div>
+    <!-- <div class="flex-container">
+        <canvas class="flex-item small" id="myCanvas"></canvas>
+    </div> -->
     <canvas id="myCanvas" resize></canvas>
 </body>
 </html>

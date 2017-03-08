@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "paper": "^0.10.2",
-    "tuio.js": "^0.3.0"
+    "tuio.js": "^0.3.0",
+    "stats.js": "*"
   }
 }
